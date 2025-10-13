@@ -32,6 +32,7 @@ const Header: React.FC = () => {
                             {[
                                 { href: '#about', label: 'About' },
                                 { href: '#projects', label: 'Projects' },
+                                { href: '#my-worlds', label: 'My Worlds' },
                                 { href: '#contact', label: 'Contact' }
                             ].map((item, index) => (
                                 <li key={index}>

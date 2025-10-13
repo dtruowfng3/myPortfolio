@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
+import MyWorlds from './components/MyWorlds';
 import Contact from './components/Contact';
 
 const App: React.FC = () => {
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           </div>
           <About />
           <Projects />
+          <MyWorlds />
           <Contact />
         </main>
       </div>
