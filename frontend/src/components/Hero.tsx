@@ -36,10 +36,8 @@ const Hero: React.FC = () => {
             </div>
             
             {/* Scroll Down Animation */}
-            <a href="#about" className="absolute bottom-8 inset-x-0 flex justify-center text-white animate-bounce-slow">
-                <div className="w-8 h-8 border-2 border-white rounded-full relative">
-                    <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                </div>
+            <a href="#about" className="absolute bottom-8 inset-x-0 flex justify-center text-white z-30 scroll-down-arrow">
+                <span className="scroll-down-span"></span>
             </a>
         </section>
     );
