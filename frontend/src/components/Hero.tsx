@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
             </div>
             
             {/* Scroll Down Animation */}
-            <a href="#about" className="absolute bottom-8 inset-x-0 flex justify-center text-white z-30 scroll-down-arrow">
+            <a href="#about" className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-white z-30 scroll-down-arrow">
                 <span className="scroll-down-span"></span>
             </a>
         </section>
