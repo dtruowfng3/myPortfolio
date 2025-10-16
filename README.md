@@ -1,4 +1,4 @@
-# Portfolio Project
+# My Simple Portfolio 
 
 This is a web portfolio project built using TypeScript with React for the frontend and Django for the backend.
 
@@ -10,5 +10,3 @@ To start the frontend development server, run:
 ```
 npm start
 ```
-## License
-This project is licensed under the MIT License.
