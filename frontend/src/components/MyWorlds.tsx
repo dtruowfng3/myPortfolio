@@ -7,12 +7,12 @@ const MyWorlds: React.FC = () => {
     const stories = [
         {
             id: 0,
-            title: "My Football Journey ⚽",
+            title: "Just, I really love Football",
             date: "2024",
             category: "Sports",
             image: "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=500&h=300&fit=crop",
             content: "Football has been my passion since childhood. I started playing when I was 8 years old and it has taught me valuable lessons about teamwork, perseverance, and leadership. Whether it's playing with friends on weekends or watching professional matches, football brings me joy and helps me stay active and healthy.",
-            highlights: ["Started playing at age 8", "Team captain in high school", "Still playing weekly with friends", "Favorite team: Barcelona"]
+            highlights: ["Started playing at age 8", "Team captain in primmary school", "Favorite team: Barcelona"]
         },
         {
             id: 1,
