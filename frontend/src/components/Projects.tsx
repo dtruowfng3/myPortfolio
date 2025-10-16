@@ -1,5 +1,6 @@
 import React from 'react';
 import portfolioImage from '../assets/my_porfolio.png';
+import portfolioGif from '../assets/my_portfolio_2.gif';
 import placeholderImage from '../assets/image_placeholder.png';
 
 const Projects: React.FC = () => {
@@ -7,7 +8,7 @@ const Projects: React.FC = () => {
         {
             title: "Simple Portfolio",
             description: "The very portfolio you're viewing, built to showcase my projects using React and TypeScript.",
-            image: portfolioImage,
+            image: portfolioGif,
             liveUrl: "#",
             sourceUrl: "#",
             tags: ["HTML", "TailwindCSS", "React.js"]
