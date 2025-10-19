@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Projects from './components/Projects';
-import MyWorlds from './components/MyWorlds';
-import Contact from './components/Contact';
+import Header from './components/common/Header';
+import Hero from './components/sections/Hero';
+import About from './components/sections/About';
+import Projects from './components/sections/Projects';
+import MyWorlds from './components/sections/MyWorlds';
+import Contact from './components/sections/Contact';
 
 const App: React.FC = () => {
   return (
