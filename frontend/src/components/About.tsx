@@ -1,5 +1,6 @@
 import React from 'react';
 import profileImage from '../assets/profile.jpg';
+import ThreeDCard from './ThreeDCard';
 
 const About: React.FC = () => {
     return (
@@ -32,7 +33,7 @@ const About: React.FC = () => {
                         <div className="absolute inset-auto z-50 h-0.5 w-[20rem] -translate-y-[3.5rem] mt-2.5 bg-cyan-400"></div>
                         <div className="absolute inset-auto z-40 h-22 w-full -translate-y-[6rem] bg-slate-950"></div>
                     </div>
-                    <h2 className="relative z-50 text-4xl font-bold text-center bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-transparent">
+                    <h2 className="relative z-50 text-4xl font-bold text-center bg-gradient-to-br from-cyan-300 via-blue-300 to-purple-300 py-4 bg-clip-text text-transparent">
                         About Me
                     </h2>
                 </div>
@@ -43,24 +44,24 @@ const About: React.FC = () => {
                         <img 
                             src={profileImage} 
                             alt="Profile Image" 
-                            className="w-80 h-80 rounded-full object-cover mx-auto shadow-devfolio-lg hover:shadow-devfolio-lg transform hover:scale-105 transition-all duration-300"
+                            className="w-80 h-80 rounded-full object-cover mx-auto shadow-2xl shadow-cyan-500/20 hover:shadow-cyan-500/30 transform hover:scale-105 transition-all duration-300 border-2 border-cyan-500/30"
                         />
                     </div>
                     
                     {/* About Text */}
-                    <div className="space-y-6 relative z-50">
-                        <p className="text-lg text-slate-200 leading-relaxed">
+                    <div className="space-y-6 relative z-10">
+                        <p className="text-lg text-slate-100 leading-relaxed">
                             I'm currently studying CET and learning ML/DL & Fullstack Dev, i'm good with Python, Django, React.
                             Participated in multiple IoT & Embedded system designs, including hardware–software integration.
                             Built marketing automation tools to optimize ad campaign performance
                         </p>
-                        <p className="text-lg text-slate-200 leading-relaxed">
+                        <p className="text-lg text-slate-100 leading-relaxed">
                             I love playing sports such as football⚽and I'm also passionate about exploring geography🌏and nature
                         </p>
                         <div className="mt-8">
                             <a 
                                 href="#" 
-                                className="inline-block bg-transparent text-primary-500 border-2 border-primary-500 px-8 py-3 rounded-lg font-semibold hover:bg-primary-500 hover:text-white transition-all duration-300"
+                                className="inline-block bg-slate-800/50 text-cyan-300 border border-cyan-500/30 px-8 py-3 rounded-lg font-semibold hover:bg-slate-700/50 hover:text-cyan-200 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-md hover:shadow-cyan-500/20"
                             >
                                 View Resume
                             </a>
@@ -77,14 +78,26 @@ const About: React.FC = () => {
                             { icon: '🤖', title: 'Machine Learning', description: 'Sklearn, PyTorch' },
                             { icon: '☁️', title: 'DevOps', description: 'Placeholder' }
                         ].map((skill, index) => (
-                            <div 
+                            <ThreeDCard 
                                 key={index}
-                                className="text-center p-6 bg-slate-800 rounded-xl shadow-devfolio hover:shadow-devfolio-hover transform hover:-translate-y-2 transition-all duration-300"
+                                className="w-full"
+                                maxRotation={25}
+                                glowOpacity={0.45}
+                                shadowBlur={60}
+                                parallaxOffset={60}
+                                enableGlow={true}
+                                enableShadow={true}
+                                enableParallax={true}
                             >
-                                <div className="text-4xl mb-4">{skill.icon}</div>
-                                <h3 className="text-xl font-semibold text-slate-100 mb-2">{skill.title}</h3>
-                                <p className="text-slate-300 text-sm">{skill.description}</p>
-                            </div>
+                                <div className="text-center p-6 bg-gradient-to-br from-cyan-900/20 via-blue-900/30 to-purple-900/20 rounded-xl border border-cyan-500/20 backdrop-blur-sm relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10"></div>
+                                    <div className="relative z-10">
+                                        <div className="text-4xl mb-4">{skill.icon}</div>
+                                        <h3 className="text-xl font-semibold text-slate-100 mb-2">{skill.title}</h3>
+                                        <p className="text-slate-300 text-sm">{skill.description}</p>
+                                    </div>
+                                </div>
+                            </ThreeDCard>
                         ))}
                     </div>
                 </div>

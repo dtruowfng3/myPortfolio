@@ -1,6 +1,7 @@
 import React from 'react';
-import portfolioImage from '../assets/my_porfolio.png';
-import portfolioGif from '../assets/my_portfolio_2.gif';
+// import portfolioImage from '../assets/my_porfolio.png';
+// import portfolioGif from '../assets/my_portfolio_2.gif';
+import portfolioGif from '../assets/my_portfolio_v3.gif';
 import placeholderImage from '../assets/image_placeholder.png';
 
 const Projects: React.FC = () => {
@@ -101,7 +102,7 @@ const Projects: React.FC = () => {
                                             alt={project.title}
                                             className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-br from-primary-500/80 to-secondary-400/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/75 to-slate-800/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                             <span className="text-white text-xl font-semibold">View Project</span>
                                         </div>
                                     </div>
