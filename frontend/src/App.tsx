@@ -4,6 +4,7 @@ import Header from './components/common/Header';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
 import Projects from './components/sections/Projects';
+import Games from './components/sections/Games';
 import MyWorlds from './components/sections/MyWorlds';
 import Contact from './components/sections/Contact';
 
@@ -18,6 +19,7 @@ const App: React.FC = () => {
           </div>
           <About />
           <Projects />
+          <Games />
           <MyWorlds />
           <Contact />
         </main>
