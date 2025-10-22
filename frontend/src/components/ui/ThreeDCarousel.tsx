@@ -26,7 +26,7 @@ const DEFAULT_IMAGES = [
 
 /* 2️⃣  Config ————————————————————————— */
 const CARD_W = 180;
-const CARD_H = 240;
+const CARD_H = 320;
 const RADIUS = 240;
 const TILT_SENSITIVITY = 10;
 const DRAG_SENSITIVITY = 0.5;
@@ -203,7 +203,7 @@ const ThreeDCarousel = React.memo(
     return (
       <div
         ref={parentRef}
-        className="w-full h-full flex items-center justify-center overflow-hidden font-sans cursor-grab active:cursor-grabbing"
+        className="w-full h-[450px] flex items-center justify-center overflow-hidden font-sans cursor-grab active:cursor-grabbing"
         style={{ userSelect: 'none' }}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
