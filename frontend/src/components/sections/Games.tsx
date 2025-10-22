@@ -1,5 +1,346 @@
 import React, { useState, useEffect } from 'react';
 
+// Games Grid Component
+const GamesGrid: React.FC = () => {
+    return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Memory Game */}
+            <div className="flex flex-col">
+                <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">
+                    Memory Game
+                </h3>
+                <div className="flex-1">
+                    <MemoryGame />
+                </div>
+            </div>
+
+            {/* 2048 Game */}
+            <div className="flex flex-col">
+                <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">
+                    2048 Game
+                </h3>
+                <div className="flex-1">
+                    <Game2048 />
+                </div>
+            </div>
+
+            {/* Sudoku Game */}
+            <div className="flex flex-col">
+                <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">
+                    Sudoku
+                </h3>
+                <div className="flex-1">
+                    <SudokuGame />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Sudoku Game Component
+const SudokuGame: React.FC = () => {
+    const [board, setBoard] = useState<number[][]>([]);
+    const [selectedCell, setSelectedCell] = useState<{row: number, col: number} | null>(null);
+    const [gameStarted, setGameStarted] = useState(false);
+    const [time, setTime] = useState(0);
+    const [isComplete, setIsComplete] = useState(false);
+
+    useEffect(() => {
+        if (gameStarted && !isComplete) {
+            const timer = setInterval(() => {
+                setTime(prev => prev + 1);
+            }, 1000);
+            return () => clearInterval(timer);
+        }
+    }, [gameStarted, isComplete]);
+
+    useEffect(() => {
+        initializeGame();
+    }, []);
+
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (!gameStarted || isComplete) return;
+            
+            // Handle number input (1-9)
+            if (e.key >= '1' && e.key <= '9') {
+                const num = parseInt(e.key);
+                handleNumberInput(num);
+            }
+            
+            // Handle cell navigation with arrow keys
+            if (selectedCell) {
+                switch (e.key) {
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        if (selectedCell.row > 0) {
+                            setSelectedCell({row: selectedCell.row - 1, col: selectedCell.col});
+                        }
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        if (selectedCell.row < 8) {
+                            setSelectedCell({row: selectedCell.row + 1, col: selectedCell.col});
+                        }
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        if (selectedCell.col > 0) {
+                            setSelectedCell({row: selectedCell.row, col: selectedCell.col - 1});
+                        }
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        if (selectedCell.col < 8) {
+                            setSelectedCell({row: selectedCell.row, col: selectedCell.col + 1});
+                        }
+                        break;
+                    case 'Backspace':
+                    case 'Delete':
+                        e.preventDefault();
+                        handleNumberInput(0);
+                        break;
+                }
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [gameStarted, isComplete, selectedCell]);
+
+    const generateRandomSudoku = () => {
+        const emptyBoard = Array(9).fill(null).map(() => Array(9).fill(0));
+        
+        // Fill diagonal 3x3 boxes first (easier to ensure validity)
+        for (let box = 0; box < 9; box += 3) {
+            fillBox(emptyBoard, box, box);
+        }
+        
+        // Fill remaining cells
+        solveSudoku(emptyBoard);
+        
+        // Remove some numbers to create puzzle
+        const puzzle = emptyBoard.map(row => [...row]);
+        const cellsToRemove = 40 + Math.floor(Math.random() * 10); // Remove 40-50 numbers
+        
+        let removed = 0;
+        while (removed < cellsToRemove) {
+            const row = Math.floor(Math.random() * 9);
+            const col = Math.floor(Math.random() * 9);
+            if (puzzle[row][col] !== 0) {
+                puzzle[row][col] = 0;
+                removed++;
+            }
+        }
+        
+        return puzzle;
+    };
+
+    const fillBox = (board: number[][], row: number, col: number) => {
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        shuffleArray(numbers);
+        
+        let index = 0;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                board[row + i][col + j] = numbers[index++];
+            }
+        }
+    };
+
+    const shuffleArray = (array: number[]) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    };
+
+    const solveSudoku = (board: number[][]): boolean => {
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (board[row][col] === 0) {
+                    for (let num = 1; num <= 9; num++) {
+                        if (isValid(board, row, col, num)) {
+                            board[row][col] = num;
+                            if (solveSudoku(board)) {
+                                return true;
+                            }
+                            board[row][col] = 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    const isValid = (board: number[][], row: number, col: number, num: number): boolean => {
+        // Check row
+        for (let x = 0; x < 9; x++) {
+            if (board[row][x] === num) return false;
+        }
+        
+        // Check column
+        for (let x = 0; x < 9; x++) {
+            if (board[x][col] === num) return false;
+        }
+        
+        // Check 3x3 box
+        const startRow = Math.floor(row / 3) * 3;
+        const startCol = Math.floor(col / 3) * 3;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[startRow + i][startCol + j] === num) return false;
+            }
+        }
+        
+        return true;
+    };
+
+    const initializeGame = () => {
+        const newBoard = generateRandomSudoku();
+        setBoard(newBoard);
+        setTime(0);
+        setGameStarted(false);
+        setIsComplete(false);
+    };
+
+    const startGame = () => {
+        setGameStarted(true);
+    };
+
+    const handleCellClick = (row: number, col: number) => {
+        if (!gameStarted || isComplete) return;
+        setSelectedCell({row, col});
+    };
+
+    const handleNumberInput = (num: number) => {
+        if (!selectedCell || !gameStarted || isComplete) return;
+        
+        const newBoard = [...board];
+        newBoard[selectedCell.row][selectedCell.col] = num;
+        setBoard(newBoard);
+        
+        // Check if board is complete
+        if (isValidSudoku(newBoard)) {
+            setIsComplete(true);
+            setGameStarted(false);
+        }
+    };
+
+    const isValidSudoku = (board: number[][]) => {
+        // First check if all cells are filled (no zeros)
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (board[row][col] === 0) return false;
+            }
+        }
+        
+        // Check rows
+        for (let row = 0; row < 9; row++) {
+            const seen = new Set();
+            for (let col = 0; col < 9; col++) {
+                const num = board[row][col];
+                if (seen.has(num)) return false;
+                seen.add(num);
+            }
+        }
+        
+        // Check columns
+        for (let col = 0; col < 9; col++) {
+            const seen = new Set();
+            for (let row = 0; row < 9; row++) {
+                const num = board[row][col];
+                if (seen.has(num)) return false;
+                seen.add(num);
+            }
+        }
+        
+        // Check 3x3 boxes
+        for (let boxRow = 0; boxRow < 3; boxRow++) {
+            for (let boxCol = 0; boxCol < 3; boxCol++) {
+                const seen = new Set();
+                for (let row = boxRow * 3; row < boxRow * 3 + 3; row++) {
+                    for (let col = boxCol * 3; col < boxCol * 3 + 3; col++) {
+                        const num = board[row][col];
+                        if (seen.has(num)) return false;
+                        seen.add(num);
+                    }
+                }
+            }
+        }
+        
+        return true;
+    };
+
+    const formatTime = (seconds: number) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    return (
+        <div className="bg-slate-900/50 p-4 rounded-xl border border-cyan-500/20 relative">
+            <div className="text-center">
+                <div className="text-cyan-200 mb-4 text-sm">
+                    Time: {formatTime(time)}
+                </div>
+
+                <div className="bg-slate-800 p-1 rounded-xl border-2 border-cyan-500/30 mb-3 inline-block">
+                    <div className="grid grid-cols-9 gap-1">
+                        {board.map((row, rowIndex) =>
+                            row.map((cell, colIndex) => (
+                                <button
+                                    key={`${rowIndex}-${colIndex}`}
+                                    onClick={() => handleCellClick(rowIndex, colIndex)}
+                                    className={`w-8 h-8 text-sm rounded border transition-all duration-200 flex items-center justify-center ${
+                                        selectedCell?.row === rowIndex && selectedCell?.col === colIndex
+                                            ? 'bg-cyan-600 text-white border-cyan-400'
+                                            : cell !== 0
+                                            ? 'bg-slate-700 text-cyan-300 border-slate-600'
+                                            : 'bg-slate-800 text-slate-400 border-slate-600 hover:bg-slate-700'
+                                    }`}
+                                >
+                                    {cell === 0 ? '' : cell}
+                                </button>
+                            ))
+                        )}
+                    </div>
+                </div>
+
+
+                <div className="mt-6">
+                    <button
+                        onClick={initializeGame}
+                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition-colors"
+                    >
+                        New Game
+                    </button>
+                </div>
+
+                {isComplete && (
+                    <div className="text-green-400 font-bold mb-6">
+                        🎉 Congratulations! You solved the Sudoku in {formatTime(time)}!
+                    </div>
+                )}
+            </div>
+
+            {/* Start Game Overlay */}
+            {!gameStarted && (
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center rounded-xl">
+                    <button
+                        onClick={startGame}
+                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
+                    >
+                        Start Game
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+};
+
 // Memory Game Component - Enhanced
 const MemoryGame: React.FC = () => {
     const [cards, setCards] = useState<(string | null)[]>([]);
@@ -12,21 +353,23 @@ const MemoryGame: React.FC = () => {
 
     const symbols = ['🍎', '🍊', '🍌', '🍇', '🍓', '🍑', '🥝', '🍍', '🥭', '🍒', '🍋', '🍉', '🍅', '🥕', '🌽', '🥔', '🍄', '🥜', '🍯', '🧀', '🥚', '🍞', '🥖', '🥨', '🧈', '🥞', '🧇', '🍳', '🥓', '🍖', '🍗', '🥩'];
 
+    const isGameComplete = matched.length === cards.length;
+
     useEffect(() => {
-        if (gameStarted) {
+        if (gameStarted && !isGameComplete) {
             const timer = setInterval(() => {
                 setTime(prev => prev + 1);
             }, 1000);
             return () => clearInterval(timer);
         }
-    }, [gameStarted]);
+    }, [gameStarted, isGameComplete]);
 
     useEffect(() => {
         initializeGame();
     }, []);
 
     const initializeGame = () => {
-        const cardCount = 32; // 8x8 grid - 32 pairs (64 cards total)
+        const cardCount = 24; // 6x8 grid - 24 pairs (48 cards total)
         const selectedSymbols = symbols.slice(0, cardCount);
         const gameCards = [...selectedSymbols, ...selectedSymbols].sort(() => Math.random() - 0.5);
         setCards(gameCards);
@@ -60,11 +403,11 @@ const MemoryGame: React.FC = () => {
         }
     };
 
-    const isGameComplete = matched.length === cards.length;
-
     useEffect(() => {
         if (isGameComplete && time > 0) {
             setBestTime(prev => prev === 0 ? time : Math.min(prev, time));
+            // Stop the timer when game is complete
+            setGameStarted(false);
         }
     }, [isGameComplete, time]);
 
@@ -74,45 +417,32 @@ const MemoryGame: React.FC = () => {
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
-    const getGridCols = () => 'grid-cols-8';
 
     return (
-        <div className="bg-slate-900/50 p-6 rounded-xl border border-cyan-500/20">
-            <h3 className="text-xl font-bold text-cyan-300 mb-4 text-center">Memory Game</h3>
-            
-
+        <div className="bg-slate-900/50 p-4 rounded-xl border border-cyan-500/20 relative">
             <div className="text-center">
                 <div className="text-cyan-200 mb-4 grid grid-cols-2 gap-4 text-sm">
                     <div>Moves: {moves}</div>
                     <div>Time: {formatTime(time)}</div>
-                    <div>Matched: {matched.length / 2} / 32</div>
+                    <div>Matched: {matched.length / 2} / 24</div>
                     <div>Best: {bestTime > 0 ? formatTime(bestTime) : '--:--'}</div>
                 </div>
 
-                {!gameStarted ? (
-                    <button
-                        onClick={startGame}
-                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition-colors mb-6"
-                    >
-                        Start Game
-                    </button>
-                ) : (
-                    <div className={`grid ${getGridCols()} gap-0.5 mb-6 justify-center max-w-4xl mx-auto`}>
-                        {cards.map((card, index) => (
-                            <button
-                                key={index}
-                                className={`w-14 h-14 text-xl rounded-md transition-all duration-300 flex items-center justify-center ${
-                                    flipped.includes(index) || matched.includes(index)
-                                        ? 'bg-cyan-600 text-white'
-                                        : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
-                                }`}
-                                onClick={() => handleCardClick(index)}
-                            >
-                                {flipped.includes(index) || matched.includes(index) ? card : '?'}
-                            </button>
-                        ))}
-                    </div>
-                )}
+                <div className="grid grid-cols-8 gap-1 mb-6 justify-center w-full max-w-md mx-auto">
+                    {cards.map((card, index) => (
+                        <button
+                            key={index}
+                            className={`w-10 h-12 text-sm rounded-md transition-all duration-300 flex items-center justify-center ${
+                                flipped.includes(index) || matched.includes(index)
+                                    ? 'bg-cyan-600 text-white'
+                                    : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                            }`}
+                            onClick={() => handleCardClick(index)}
+                        >
+                            {flipped.includes(index) || matched.includes(index) ? card : '?'}
+                        </button>
+                    ))}
+                </div>
 
                 {isGameComplete && (
                     <div className="text-green-400 font-bold mb-6">
@@ -129,6 +459,18 @@ const MemoryGame: React.FC = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Start Game Overlay */}
+            {!gameStarted && (
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center rounded-xl">
+                    <button
+                        onClick={startGame}
+                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
+                    >
+                        Start Game
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
@@ -340,40 +682,29 @@ const Game2048: React.FC = () => {
     }, [board, gameOver, gameStarted]);
 
     return (
-        <div className="bg-slate-900/50 p-6 rounded-xl border border-cyan-500/20">
-            <h3 className="text-xl font-bold text-cyan-300 mb-4 text-center">2048 Game</h3>
-            
+        <div className="bg-slate-900/50 p-4 rounded-xl border border-cyan-500/20 relative">
             <div className="text-center">
                 <div className="text-cyan-200 mb-4 grid grid-cols-2 gap-4 text-sm">
                     <div>Score: {score}</div>
                     <div>Best: {bestScore}</div>
                 </div>
 
-                {!gameStarted ? (
-                    <button
-                        onClick={startGame}
-                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition-colors mb-6"
-                    >
-                        Start Game
-                    </button>
-                ) : (
-                    <div className="bg-slate-800 p-4 rounded-xl border-2 border-cyan-500/30 mb-6 inline-block">
-                        <div className="grid grid-cols-4 gap-2">
-                            {board.map((row, rowIndex) =>
-                                row.map((cell, colIndex) => (
-                                    <div
-                                        key={`${rowIndex}-${colIndex}`}
-                                        className={`w-16 h-16 rounded-lg flex items-center justify-center text-lg font-bold transition-all duration-200 ${getTileColor(cell)} ${getTextColor(cell)} ${
-                                            cell !== 0 ? 'shadow-lg transform hover:scale-105' : ''
-                                        }`}
-                                    >
-                                        {cell === 0 ? '' : cell}
-                                    </div>
-                                ))
-                            )}
-                        </div>
+                <div className="bg-slate-800 p-4 rounded-xl border-2 border-cyan-500/30 mt-6 inline-block">
+                    <div className="grid grid-cols-4 gap-1">
+                        {board.map((row, rowIndex) =>
+                            row.map((cell, colIndex) => (
+                                <div
+                                    key={`${rowIndex}-${colIndex}`}
+                                    className={`w-16 h-16 rounded-lg flex items-center justify-center text-lg font-bold transition-all duration-200 ${getTileColor(cell)} ${getTextColor(cell)} ${
+                                        cell !== 0 ? 'shadow-lg transform hover:scale-105' : ''
+                                    }`}
+                                >
+                                    {cell === 0 ? '' : cell}
+                                </div>
+                            ))
+                        )}
                     </div>
-                )}
+                </div>
 
                 {won && !gameOver && (
                     <div className="text-green-400 font-bold mb-2">
@@ -387,36 +718,8 @@ const Game2048: React.FC = () => {
                     </div>
                 )}
 
-                {gameStarted && (
-                    <div className="flex gap-2 justify-center mb-4">
-                        <button
-                            onClick={() => handleMove('left')}
-                            className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded text-sm transition-colors"
-                        >
-                            ←
-                        </button>
-                        <button
-                            onClick={() => handleMove('up')}
-                            className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded text-sm transition-colors"
-                        >
-                            ↑
-                        </button>
-                        <button
-                            onClick={() => handleMove('down')}
-                            className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded text-sm transition-colors"
-                        >
-                            ↓
-                        </button>
-                        <button
-                            onClick={() => handleMove('right')}
-                            className="bg-cyan-600 hover:bg-cyan-700 text-white px-3 py-1 rounded text-sm transition-colors"
-                        >
-                            →
-                        </button>
-                    </div>
-                )}
 
-                <div className="mt-6">
+                <div className="mt-10">
                     <button
                         onClick={initializeGame}
                         className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition-colors"
@@ -425,6 +728,18 @@ const Game2048: React.FC = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Start Game Overlay */}
+            {!gameStarted && (
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center rounded-xl">
+                    <button
+                        onClick={startGame}
+                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
+                    >
+                        Start Game
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
@@ -458,14 +773,12 @@ const Games: React.FC = () => {
                         <div className="absolute inset-auto z-50 h-18 w-[18rem] -translate-y-1/2 rounded-full bg-cyan-500 opacity-50 blur-3xl"></div>
                         <div className="absolute inset-auto z-30 h-18 w-40 -translate-y-[3rem] rounded-full bg-cyan-400 blur-2xl"></div>
                         <div className="absolute inset-auto z-50 h-0.5 w-[20rem] -translate-y-[3.5rem] mt-2.5 bg-cyan-400"></div>
-                        <div className="absolute inset-auto z-40 h-22 w-full -translate-y-[6rem] bg-slate-950"></div>
+                        <div className="absolute inset-auto z-10 h-22 w-full -translate-y-[6rem] bg-slate-950"></div>
                     </div>
                 </div>
 
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-50">
-                    <MemoryGame />
-                    <Game2048 />
+                <div className="relative z-50">
+                    <GamesGrid />
                 </div>
             </div>
         </section>
