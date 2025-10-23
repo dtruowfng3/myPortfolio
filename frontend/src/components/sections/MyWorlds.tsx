@@ -6,23 +6,30 @@ const MyWorlds: React.FC = () => {
         {
             id: 0,
             title: "Just, I really love Football",
-            date: "2024",
+            date: "2014 - current",
             category: "Sports",
-            content: "Football has been my passion since childhood. I started playing when I was 8 years old and it has taught me valuable lessons about teamwork, perseverance, and leadership."
+            content: "Since childhood, I've loved football and dreamed of being selected for the HAGL football academy, but life circumstances didn't allow it.\nI started watching football in 2014 with the World Cup 2014, where Costa Rica left a deep impression on me.\nThat year I supported both the mighty German team and Argentina because of Messi - it was unfortunate for Messi but congratulations to Germany for winning.\nI'm a Manchester United fan."
         },
         {
             id: 1,
-            title: "Exploring Geography & Nature 🌏",
-            date: "2023-2024",
+            title: "Exploring Geography & Nature",
+            date: "2018 - current",
             category: "Travel & Nature",
-            content: "I have a deep fascination with geography and nature. I love studying different countries, their cultures, landscapes, and natural phenomena."
+            content: "I simply find it interesting to discuss geography. Although I still make mistakes, I can recognize 197/197 flags of countries and territories around the world."
         },
         {
             id: 2,
-            title: "Cooking Adventures 👨‍🍳",
-            date: "2024",
-            category: "Lifestyle",
-            content: "During the pandemic, I discovered my love for cooking. It started as a necessity but quickly became a creative outlet."
+            title: "K-Drama Healing Journey",
+            date: "2022 - current",
+            category: "Entertainment",
+            content: "I enjoy watching K-dramas because I discovered a really good healing drama called 'Our Beloved Summer' that partially healed me, so I fell in love with them.\nBefore that, there was also a popular drama 'Descendants of the Sun' with a supporting actress Kim Ji-won who I consider my angel."
+        },
+        {
+            id: 3,
+            title: "Dream (yeah, idk what to write here, just desire rest)",
+            date: "Future",
+            category: "Travel & Nature",
+            content: "I just want to take a rest in this fast-paced and stressful life. I wish I could ski down and admire the vastest grassland scenery in Mongolia."
         }
     ];
 
@@ -68,9 +75,6 @@ const MyWorlds: React.FC = () => {
                         {stories.map((story) => (
                             <li key={story.id} className="relative">
                                 <div className="relative z-10 flex items-center gap-3 mb-1">
-                                    <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-900/30 text-cyan-300 border border-cyan-500/30">
-                                        {story.date}
-                                    </span>
                                     <span className="text-xs px-2 py-0.5 rounded-full bg-purple-900/20 text-cyan-200 border border-cyan-500/20">
                                         {story.category}
                                     </span>

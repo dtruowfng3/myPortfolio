@@ -1,5 +1,5 @@
 import React from 'react';
-import profileImage from '../../assets/profile.jpg';
+// import profileImage from '../../public/android-chrome-512x512.png';
 import ThreeDCard from '../ui/ThreeDCard';
 
 const About: React.FC = () => {
@@ -12,7 +12,7 @@ const About: React.FC = () => {
                             style={{
                                 backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
                             }}
-                            className="absolute inset-auto right-1/2 h-32 overflow-visible w-[20rem] mt-7 bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
+                            className="absolute inset-auto right-1/2 h-32 overflow-visible w-48 sm:w-64 md:w-80 lg:w-[20rem] mt-7 bg-gradient-conic from-cyan-500 via-transparent to-transparent text-white [--conic-position:from_70deg_at_center_top]"
                         >
                             <div className="absolute w-[100%] left-0 bg-slate-950 h-20 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
                             <div className="absolute w-20 h-[100%] left-0 bg-slate-950 bottom-0 z-20 [mask-image:linear-gradient(to_right,white,transparent)]" />
@@ -21,16 +21,16 @@ const About: React.FC = () => {
                             style={{
                                 backgroundImage: `conic-gradient(var(--conic-position), var(--tw-gradient-stops))`,
                             }}
-                            className="absolute inset-auto left-1/2 h-32 w-[20rem] mt-7 bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
+                            className="absolute inset-auto left-1/2 h-32 w-48 sm:w-64 md:w-80 lg:w-[20rem] mt-7 bg-gradient-conic from-transparent via-transparent to-cyan-500 text-white [--conic-position:from_290deg_at_center_top]"
                         >
                             <div className="absolute w-20 h-[100%] right-0 bg-slate-950 bottom-0 z-20 [mask-image:linear-gradient(to_left,white,transparent)]" />
                             <div className="absolute w-[100%] right-0 bg-slate-950 h-20 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
                         </div>
-                        <div className="absolute top-1/2 h-24 w-[20rem] translate-y-6 bg-slate-950 blur-2xl"></div>
+                        <div className="absolute top-1/2 h-24 w-48 sm:w-64 md:w-80 lg:w-[20rem] translate-y-6 bg-slate-950 blur-2xl"></div>
                         <div className="absolute top-1/2 z-50 h-24 w-full bg-transparent opacity-10 backdrop-blur-md"></div>
                         <div className="absolute inset-auto z-50 h-18 w-[18rem] -translate-y-1/2 rounded-full bg-cyan-500 opacity-50 blur-3xl"></div>
                         <div className="absolute inset-auto z-30 h-18 w-40 -translate-y-[3rem] rounded-full bg-cyan-400 blur-2xl"></div>
-                        <div className="absolute inset-auto z-50 h-0.5 w-[20rem] -translate-y-[3.5rem] mt-2.5 bg-cyan-400"></div>
+                        <div className="absolute inset-auto z-50 h-0.5 w-48 sm:w-64 md:w-80 lg:w-[20rem] -translate-y-[3.5rem] mt-2.5 bg-cyan-400"></div>
                         <div className="absolute inset-auto z-40 h-22 w-full -translate-y-[6rem] bg-slate-950"></div>
                     </div>
                     <h2 className="relative z-50 text-4xl font-bold text-center bg-gradient-to-br from-cyan-300 via-blue-300 to-purple-300 py-4 bg-clip-text text-transparent">
@@ -42,7 +42,7 @@ const About: React.FC = () => {
                     {/* Profile Image */}
                     <div className="text-center">
                         <img 
-                            src={profileImage} 
+                            src="/android-chrome-512x512.png" 
                             alt="Profile Image" 
                             className="w-80 h-80 rounded-full object-cover mx-auto shadow-2xl shadow-cyan-500/20 hover:shadow-cyan-500/30 transform hover:scale-105 transition-all duration-300 border-2 border-cyan-500/30"
                         />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -11,6 +12,14 @@ const Header: React.FC = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
@@ -28,7 +37,7 @@ const Header: React.FC = () => {
                     
                     {/* Desktop Navigation */}
                     <nav className="hidden md:block">
-                        <ul className="flex space-x-8">
+                        <ul className="flex space-x-8 justify-end">
                             {[
                                 { href: '#about', label: 'About' },
                                 { href: '#projects', label: 'Projects' },
@@ -49,9 +58,39 @@ const Header: React.FC = () => {
                     </nav>
                     
                     {/* Mobile Menu Button */}
-                    <button className="md:hidden text-slate-200 text-2xl">
-                        ☰
+                    <button 
+                        onClick={toggleMobileMenu}
+                        className="md:hidden text-slate-200 text-2xl hover:text-cyan-400 transition-colors duration-300"
+                    >
+                        {isMobileMenuOpen ? '✕' : '☰'}
                     </button>
+                </div>
+                
+                {/* Mobile Menu */}
+                <div className={`md:hidden transition-all duration-300 overflow-hidden ${
+                    isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}>
+                    <nav className="bg-slate-950/95 backdrop-blur-md border-t border-slate-800">
+                        <ul className="flex flex-col space-y-2 py-4 items-end">
+                            {[
+                                { href: '#about', label: 'About' },
+                                { href: '#projects', label: 'Projects' },
+                                { href: '#games', label: 'Games' },
+                                { href: '#my-worlds', label: 'My Worlds' },
+                                { href: '#contact', label: 'Contact' }
+                            ].map((item, index) => (
+                                <li key={index}>
+                                    <a 
+                                        href={item.href}
+                                        onClick={closeMobileMenu}
+                                        className="block text-slate-200 font-bold px-6 py-3 hover:text-cyan-400 hover:bg-slate-800 transition-all duration-300"
+                                    >
+                                        {item.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </header>
