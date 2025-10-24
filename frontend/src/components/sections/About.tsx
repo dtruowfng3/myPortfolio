@@ -7,7 +7,7 @@ const About: React.FC = () => {
     return (
         <section id="about" className="py-12 bg-slate-950">
             <div className="container mx-auto px-4 max-w-6xl">
-                <div className="relative flex flex-col items-center justify-center mb-12 mt-20">
+                <div className="relative flex flex-col items-center justify-center mt-20">
                     <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0">
                         <div
                             style={{
@@ -28,7 +28,7 @@ const About: React.FC = () => {
                             <div className="absolute w-[100%] right-0 bg-slate-950 h-20 bottom-0 z-20 [mask-image:linear-gradient(to_top,white,transparent)]" />
                         </div>
                         <div className="absolute top-1/2 h-24 w-48 sm:w-64 md:w-80 lg:w-[20rem] translate-y-6 bg-slate-950 blur-2xl"></div>
-                        <div className="absolute top-1/2 z-50 h-24 w-full bg-transparent opacity-10 backdrop-blur-md"></div>
+                        <div className="absolute top-1/2 z-50 h-12 w-full bg-transparent opacity-10 backdrop-blur-md"></div>
                         <div className="absolute inset-auto z-50 h-18 w-[18rem] -translate-y-1/2 rounded-full bg-cyan-500 opacity-50 blur-3xl"></div>
                         <div className="absolute inset-auto z-30 h-18 w-40 -translate-y-[3rem] rounded-full bg-cyan-400 blur-2xl"></div>
                         <div className="absolute inset-auto z-50 h-0.5 w-48 sm:w-64 md:w-80 lg:w-[20rem] -translate-y-[3.5rem] mt-2.5 bg-cyan-400"></div>
@@ -39,7 +39,7 @@ const About: React.FC = () => {
                     </h2>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center scale-90 sm:scale-95 md:scale-100">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center scale-80 sm:scale-85 md:scale-90 lg:scale-95">
                     {/* Profile Image */}
                     <div className="text-center">
                         <img 
@@ -71,8 +71,8 @@ const About: React.FC = () => {
                 </div>
                 
                 {/* Skills Grid */}
-                <div className="mt-12 lg:mt-16 scale-90 sm:scale-95 md:scale-100">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="mt-8 lg:mt-12 scale-80 sm:scale-85 md:scale-90 lg:scale-95">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                         {[
                             { icon: '💻', title: 'Frontend', description: 'TypeScript/React, TailwindCSS' },
                             { icon: '⚙️', title: 'Backend', description: 'Python, Django' },
