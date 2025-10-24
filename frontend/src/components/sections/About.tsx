@@ -1,6 +1,7 @@
 import React from 'react';
 // import profileImage from '../../public/android-chrome-512x512.png';
 import ThreeDCard from '../ui/ThreeDCard';
+import ExternalLinkIcon from '../ui/ExternalLinkIcon';
 
 const About: React.FC = () => {
     return (
@@ -38,39 +39,39 @@ const About: React.FC = () => {
                     </h2>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center scale-90 sm:scale-95 md:scale-100">
                     {/* Profile Image */}
                     <div className="text-center">
                         <img 
                             src="/android-chrome-512x512.png" 
                             alt="Profile Image" 
-                            className="w-80 h-80 rounded-full object-cover mx-auto shadow-2xl shadow-cyan-500/20 hover:shadow-cyan-500/30 transform hover:scale-105 transition-all duration-300 border-2 border-cyan-500/30"
+                            className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full object-cover mx-auto shadow-2xl shadow-cyan-500/20 hover:shadow-cyan-500/30 transform hover:scale-105 transition-all duration-300 border-2 border-cyan-500/30"
                         />
                     </div>
                     
                     {/* About Text */}
                     <div className="space-y-6 relative z-10">
-                        <p className="text-lg text-slate-100 leading-relaxed">
-                            I'm currently studying CET and learning ML/DL & Fullstack Dev, i'm good with Python, Django, React.
-                            Participated in multiple IoT & Embedded system designs, including hardware–software integration.
-                            Built marketing automation tools to optimize ad campaign performance
-                        </p>
-                        <p className="text-lg text-slate-100 leading-relaxed">
-                            I love playing sports such as football⚽and I'm also passionate about exploring geography🌏and nature
-                        </p>
+                        <ul className="text-lg text-slate-100 leading-relaxed space-y-2">
+                            <li>• Final-year student in CET major at HCMUTE, learning AI Agents, Automation, ML/DL & Dev</li>
+                            <li>• Participated in multiple IoT & Embedded system designs, including hardware–software integration</li>
+                            <li>• Built marketing automation tool for UA team to optimize ad campaign performance</li>
+                        </ul>
                         <div className="mt-8">
                             <a 
                                 href="#" 
-                                className="inline-block bg-slate-800/50 text-cyan-300 border border-cyan-500/30 px-8 py-3 rounded-lg font-semibold hover:bg-slate-700/50 hover:text-cyan-200 hover:border-cyan-400/50 transition-all duration-300 hover:shadow-md hover:shadow-cyan-500/20"
+                                className="group/modal-btn relative inline-flex items-center justify-center bg-slate-800/50 text-cyan-300 border border-cyan-500/30 px-8 py-3 rounded-lg font-semibold hover:text-slate-100 hover:border-cyan-400/50 transition-all duration-500 hover:shadow-md hover:shadow-cyan-500/20 overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-cyan-500 before:to-blue-500 before:-translate-x-full before:transition-transform before:duration-500 hover:before:translate-x-0"
                             >
-                                View Resume
+                                <span className="relative z-10 transition-opacity duration-300 group-hover/modal-btn:opacity-0">View Resume</span>
+                                <ExternalLinkIcon 
+                                    className="absolute w-6 h-6 text-white transition-opacity duration-300 opacity-0 group-hover/modal-btn:opacity-100 z-20"
+                                />
                             </a>
                         </div>
                     </div>
                 </div>
                 
                 {/* Skills Grid */}
-                <div className="mt-16">
+                <div className="mt-12 lg:mt-16 scale-90 sm:scale-95 md:scale-100">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {[
                             { icon: '💻', title: 'Frontend', description: 'TypeScript/React, TailwindCSS' },
@@ -93,7 +94,7 @@ const About: React.FC = () => {
                                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10"></div>
                                     <div className="relative z-10">
                                         <div className="text-4xl mb-4">{skill.icon}</div>
-                                        <h3 className="text-xl font-semibold text-slate-100 mb-2">{skill.title}</h3>
+                                        <h3 className="text-xl font-bold text-slate-100 mb-2 bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">{skill.title}</h3>
                                         <p className="text-slate-300 text-sm">{skill.description}</p>
                                     </div>
                                 </div>

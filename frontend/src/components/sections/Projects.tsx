@@ -3,6 +3,7 @@ import React from 'react';
 // import portfolioGif from '../../assets/my_portfolio_2.gif';
 import portfolioGif from '../../assets/my_portfolio_v3.gif';
 import placeholderImage from '../../assets/image_placeholder.png';
+import ExternalLinkIcon from '../ui/ExternalLinkIcon';
 
 const Projects: React.FC = () => {
     const projects = [
@@ -11,8 +12,8 @@ const Projects: React.FC = () => {
             description: "The very portfolio you're viewing, built to showcase my projects using React and TypeScript.",
             image: portfolioGif,
             liveUrl: "#",
-            sourceUrl: "#",
-            tags: ["HTML", "TailwindCSS", "React.js"]
+            sourceUrl: "https://github.com/dtruowfng3/myPortfolio",
+            tags: ["TypeScript", "React", "TailwindCSS"]
         },
         {
             title: "Project Title 2",
@@ -81,9 +82,12 @@ const Projects: React.FC = () => {
                                         href={project.sourceUrl} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="bg-transparent text-primary-500 border-2 border-primary-500 px-6 py-3 rounded-lg font-semibold hover:bg-primary-500 hover:text-white transition-all duration-300"
+                                        className="group/source-btn relative inline-flex items-center justify-center bg-transparent text-primary-500 border-2 border-primary-500 px-6 py-3 rounded-lg font-semibold hover:text-white transition-all duration-500 hover:shadow-md hover:shadow-primary-500/20 overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary-500 before:to-primary-600 before:-translate-x-full before:transition-transform before:duration-500 hover:before:translate-x-0"
                                     >
-                                        Source Code
+                                        <span className="relative z-10 transition-opacity duration-300 group-hover/source-btn:opacity-0">Source Code</span>
+                                        <ExternalLinkIcon 
+                                            className="absolute w-5 h-5 text-white transition-opacity duration-300 opacity-0 group-hover/source-btn:opacity-100 z-20"
+                                        />
                                     </a>
                                 </div>
                             </div>
