@@ -4,15 +4,11 @@ This is a web portfolio project built using TypeScript with React for the fronte
 
 ## Examples
 
-![Portfolio Demo](assets/my_portfolio_v3.gif)
+<img src="assets/my_portfolio_v3.gif" alt="Hero" width="99.5%">
 
-![About Section](assets/about.png) ![Games Section](assets/games.png)
+<img src="assets/about.png" alt="About Section" width="49.5%"> <img src="assets/games.png" alt="Games Section" width="49.5%">
 
-<video width="100%" controls>
-  <source src="https://github.com/dtruowfng3/myPortfolio/assets/3dcarousel.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
+<img src="assets/3dcarousel.gif" alt="Hero" width="99.5%">
 
 ## Features
 
