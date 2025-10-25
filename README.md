@@ -4,10 +4,14 @@ This is a web portfolio project built using TypeScript with React for the fronte
 
 ## Examples
 
-https://github.com/dtruowfng3/myPortfolio/frontend/src/assets/my_portfolio_v3.gif
-https://github.com/dtruowfng3/myPortfolio/assets/about.png
-https://github.com/dtruowfng3/myPortfolio/assets/games.png
-https://github.com/dtruowfng3/myPortfolio/assets/3dcarousel.mp4
+![Portfolio Demo](assets/my_portfolio_v3.gif)
+
+![About Section](assets/about.png) ![Games Section](assets/games.png)
+
+<video width="100%" controls>
+  <source src="https://github.com/dtruowfng3/myPortfolio/assets/3dcarousel.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 
 ## Features
@@ -64,7 +68,7 @@ frontend/
    ```
 
 4. **Open your browser**
-   Navigate to `http://localhost:3000` to view the portfolio
+   `http://localhost:3000` to view the portfolio
 
 ### Build for Production
 
@@ -92,9 +96,8 @@ The portfolio uses a cyan/blue color scheme defined in TailwindCSS. You can cust
 2. Import and add to `App.tsx`
 3. Add navigation link in `Header.tsx`
 
-## Deployment
+## Deployment in GitHub Pages
 
-### GitHub Pages
 1. Install gh-pages: `npm install --save-dev gh-pages`
 2. Add deploy script to package.json:
    ```json
@@ -112,7 +115,6 @@ The portfolio uses a cyan/blue color scheme defined in TailwindCSS. You can cust
 - **LinkedIn**: [Truong Vo](https://www.linkedin.com/in/truong-vo-814922345/)
 - **Email**: vduytruong3124@gmail.com
 
----
 
 ## References UI Components
 
@@ -122,6 +124,5 @@ The portfolio uses a cyan/blue color scheme defined in TailwindCSS. You can cust
 - [ExternalLinkIcon - Arrow >> icon ](https://seraui.com/docs/svg-icons)
 - [Footer - Minimal](https://seraui.com/docs/footer)
 
----
 
-⭐ If you found this portfolio helpful, please give it a star!
+⭐ Thank you!
