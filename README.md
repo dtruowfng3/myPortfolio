@@ -8,8 +8,6 @@ This is a web portfolio project built using TypeScript with React for the fronte
 
 <img src="assets/about.png" alt="About Section" width="49.5%"> <img src="assets/games.png" alt="Games Section" width="49.5%">
 
-<img src="assets/3dcarousel.gif" alt="Hero" width="99.5%">
-
 ## Features
 
 - 3D interactive portfolio
