@@ -24,13 +24,13 @@ const GamesGrid: React.FC = () => {
                 </div>
             </div>
 
-            {/* Sudoku Game */}
+            {/* Tic Tac Toe */}
             <div className="flex flex-col">
                 <h3 className="text-2xl font-bold text-cyan-300 mb-6 text-center">
-                    Sudoku
+                    Tic Tac Toe
                 </h3>
                 <div className="flex-1">
-                    <SudokuGame />
+                    <TicTacToe />
                 </div>
             </div>
         </div>
@@ -340,6 +340,114 @@ const SudokuGame: React.FC = () => {
         </div>
     );
 };
+
+// Tic Tac Toe (X O) Game Component
+const TicTacToe: React.FC = () => {
+    const emptyBoard: (null | 'X' | 'O')[] = Array(9).fill(null);
+    const [squares, setSquares] = useState<(null | 'X' | 'O')[]>(emptyBoard);
+    const [xIsNext, setXIsNext] = useState(true);
+    // Track turn order per player to enforce max 3 marks rule
+    const [xQueue, setXQueue] = useState<number[]>([]);
+    const [oQueue, setOQueue] = useState<number[]>([]);
+    const [gameStarted, setGameStarted] = useState(false);
+
+    const winner = calculateWinner(squares);
+    const isDraw = !winner && squares.every(Boolean);
+
+    const handleClick = (index: number) => {
+        if (!gameStarted || squares[index] || winner) return;
+        const nextSquares = squares.slice();
+        if (xIsNext) {
+            nextSquares[index] = 'X';
+            // enqueue and enforce max length 3
+            const newQueue = [...xQueue, index];
+            if (newQueue.length > 3) {
+                const oldest = newQueue.shift() as number;
+                nextSquares[oldest] = null;
+            }
+            setXQueue(newQueue);
+        } else {
+            nextSquares[index] = 'O';
+            const newQueue = [...oQueue, index];
+            if (newQueue.length > 3) {
+                const oldest = newQueue.shift() as number;
+                nextSquares[oldest] = null;
+            }
+            setOQueue(newQueue);
+        }
+        setSquares(nextSquares);
+        setXIsNext(!xIsNext);
+    };
+
+    const resetGame = () => {
+        setSquares(emptyBoard);
+        setXIsNext(true);
+        setXQueue([]);
+        setOQueue([]);
+        setGameStarted(false);
+    };
+
+    return (
+        <div className="bg-slate-900/50 p-4 rounded-xl border border-cyan-500/20 relative">
+            <div className="text-center mb-4 text-cyan-200 font-semibold">
+                {winner ? `Winner: ${winner}` : isDraw ? 'Draw!' : `Turn: ${xIsNext ? 'X' : 'O'}`}
+            </div>
+            <div className="grid grid-cols-3 gap-2 w-full max-w-xs mx-auto my-9">
+                {squares.map((val, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => handleClick(idx)}
+                        className={`h-20 w-20 md:h-24 md:w-24 rounded-lg border-2 flex items-center justify-center text-3xl font-black transition-colors
+                            ${val === 'X' ? 'bg-cyan-600/20 border-cyan-400 text-cyan-300' : val === 'O' ? 'bg-purple-600/20 border-purple-400 text-purple-300' : 'bg-slate-800 border-slate-600 hover:bg-slate-700'}`}
+                    >
+                        {val}
+                    </button>
+                ))}
+            </div>
+            <div className="text-center mt-6">
+                <button onClick={resetGame} className="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2 rounded-lg transition-colors">
+                    New Game
+                </button>
+            </div>
+
+            {/* Start / Result Overlay */}
+            {!gameStarted && (
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center rounded-xl">
+                    <div className="text-center space-y-4">
+                        {(winner || isDraw) && (
+                            <div className="text-cyan-200 font-semibold">
+                                {winner ? `Winner: ${winner}` : 'Draw!'}
+                            </div>
+                        )}
+                        <button
+                            onClick={() => setGameStarted(true)}
+                            className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
+                        >
+                            {winner || isDraw ? 'Play Again' : 'Start Game'}
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+function calculateWinner(sq: (null | 'X' | 'O')[]) {
+    const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
+    for (const [a, b, c] of lines) {
+        if (sq[a] && sq[a] === sq[b] && sq[a] === sq[c]) return sq[a];
+    }
+    return null;
+}
 
 // Memory Game Component - Enhanced
 const MemoryGame: React.FC = () => {
@@ -712,11 +820,7 @@ const Game2048: React.FC = () => {
                     </div>
                 )}
 
-                {gameOver && (
-                    <div className="text-red-400 font-bold mb-2">
-                        Game Over! Final Score: {score}
-                    </div>
-                )}
+                {/* Game over message moved to overlay */}
 
 
                 <div className="mt-10">
@@ -729,15 +833,37 @@ const Game2048: React.FC = () => {
                 </div>
             </div>
 
-            {/* Start Game Overlay */}
-            {!gameStarted && (
+            {/* Start / Game Over Overlay */}
+            {(!gameStarted || gameOver) && (
                 <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center rounded-xl">
-                    <button
-                        onClick={startGame}
-                        className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
-                    >
-                        Start Game
-                    </button>
+                    <div className="text-center space-y-4">
+                        {gameOver && (
+                            <div className="text-red-400 font-bold">
+                                Game Over! Final Score: {score}
+                            </div>
+                        )}
+                        {!gameStarted && !gameOver && (
+                            <div className="text-cyan-200 font-semibold">2048 Game</div>
+                        )}
+                        <div className="flex items-center justify-center gap-3">
+                            {!gameOver && (
+                                <button
+                                    onClick={startGame}
+                                    className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
+                                >
+                                    Start Game
+                                </button>
+                            )}
+                            {gameOver && (
+                                <button
+                                    onClick={initializeGame}
+                                    className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg transition-colors text-lg font-bold"
+                                >
+                                    New Game
+                                </button>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
