@@ -842,9 +842,6 @@ const Game2048: React.FC = () => {
                                 Game Over! Final Score: {score}
                             </div>
                         )}
-                        {!gameStarted && !gameOver && (
-                            <div className="text-cyan-200 font-semibold">2048 Game</div>
-                        )}
                         <div className="flex items-center justify-center gap-3">
                             {!gameOver && (
                                 <button
